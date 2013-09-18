@@ -2,7 +2,7 @@
 
 This is a monkey patch for Rails in order to speed up its json encoding, and to draw people's attention to this [Rails issue](https://github.com/rails/rails/issues/9212). 
 
-For full details please read Jason Hutchen's [blog post](http://devblog.agworld.com.au/post/42586025923/the-performance-of-to-json-in-rails-sucks-and-theres).
+For full details please read Jason Hutchens' [blog post](http://devblog.agworld.com.au/post/42586025923/the-performance-of-to-json-in-rails-sucks-and-theres).
 
 All credits goes to [Jason Hutchens](https://github.com/jasonhutchens) for discovering the issue and provide the code for this monkey patch.
 
