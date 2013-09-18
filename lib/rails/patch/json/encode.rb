@@ -5,7 +5,7 @@ require "rails/patch/json/encode/version"
 [Object, Array, FalseClass, Float, Hash, Integer, NilClass, String, TrueClass].each do |klass|
   klass.class_eval do
     def to_json(opts = {})
-      MultiJson::dump(self, opts)
+      MultiJson::dump(self.as_json(opts), opts)
     end
   end
 end
