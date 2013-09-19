@@ -6,10 +6,10 @@ require 'rails/patch/json/encode/version'
 Gem::Specification.new do |spec|
   spec.name          = "rails-patch-json-encode"
   spec.version       = Rails::Patch::Json::Encode::VERSION
-  spec.authors       = ["Jason Hutchens", "lulalala"]
+  spec.authors       = ["lulalala", "Jason Hutchens"]
   spec.email         = ["mark@goodlife.tw"]
-  spec.description   = %q{A monkey patch to speed up Rails's json generation time.}
-  spec.summary       = %q{A monkey patch to speed up Rails's json generation time.}
+  spec.description   = %q{A monkey patch to speed up Rails' JSON generation time.}
+  spec.summary       = %q{A monkey patch to speed up Rails' JSON generation time.}
   spec.homepage      = "https://github.com/GoodLife/rails-patch-json-encode"
   spec.license       = "MIT"
 

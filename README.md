@@ -1,10 +1,10 @@
 # Rails::Patch::Json::Encode
 
-This is a monkey patch for Rails in order to speed up its json encoding, and to draw people's attention to this [Rails issue](https://github.com/rails/rails/issues/9212). 
+This is a monkey patch for Rails in order to speed up its JSON encoding, and to draw people's attention to this [Rails issue](https://github.com/rails/rails/issues/9212). 
 
 For full details please read Jason Hutchens' [blog post](http://devblog.agworld.com.au/post/42586025923/the-performance-of-to-json-in-rails-sucks-and-theres).
 
-All credits goes to [Jason Hutchens](https://github.com/jasonhutchens) for discovering the issue and provide the code for this monkey patch.
+All credits goes to [Jason Hutchens](https://github.com/jasonhutchens) for discovering the issue and providing the code for this monkey patch.
 
 ## Usage
 
@@ -22,11 +22,11 @@ Then bundle install this gem with a fast JSON encoding gem in your Rails' Gemfil
     gem 'rails-patch-json-encode'
     gem 'oj'
     
-In this case I choose the oj gem, but you can [choose a json gem that multi_json supports](https://github.com/intridea/multi_json#supported-json-engines).
+In this case I choose the oj gem, but you can [choose a JSON gem that multi_json supports](https://github.com/intridea/multi_json#supported-json-engines).
 
-Rails should now use the faster decoder. Now restart your console again and rerun the test to see how the performance changes.
+Rails should now use the faster encoder. Now restart your console again and re-run the test to see how the performance changes.
 
-The actual performance boost on real data will probably be less than that.
+The actual performance boost on real-world applications will probably be less than that. For one of my page I see the rendering time dropped by 25%.
 
 ## Warning
 
