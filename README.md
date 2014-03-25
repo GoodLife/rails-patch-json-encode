@@ -6,7 +6,7 @@ For full details please read Jason Hutchens' [blog post](http://devblog.agworld.
 
 All credits goes to [Jason Hutchens](https://github.com/jasonhutchens) for discovering the issue and providing the code for this monkey patch.
 
-## Usage
+## Installation
 
 First, go to your Rails console and type:
 
@@ -17,14 +17,23 @@ First, go to your Rails console and type:
     
 See how Rails performs before the patch.
 
-Then bundle install this gem with a fast JSON encoding gem in your Rails' Gemfile.
+Second, bundle install this gem with a fast JSON encoding gem in your Rails' Gemfile.
 
     gem 'rails-patch-json-encode'
     gem 'oj'
     
-In this case I choose the oj gem, but you can [choose a JSON gem that multi_json supports](https://github.com/intridea/multi_json#supported-json-engines).
+In this case I choose the oj gem, but you can [choose a json-encoder gem that multi_json supports](https://github.com/intridea/multi_json#supported-json-engines).
 
-Rails should now use the faster encoder. Now restart your console again and re-run the test to see how the performance changes.
+Last, there are two levels of patch available. You have to choose one and call it explictly:
+
+* `Rails::Patch::Json::Encode.patch_base_classes` patches all Ruby base classes.
+* `Rails::Patch::Json::Encode.patch_renderers` patches Rails' ActionController::Renderers only. This is for those who had issue with the JSON gem, as patching base classes cause infinite recursive loop. 
+
+Place one of them in Rails' initializers like config/initializers/rails_patch_json_encode.rb, and Rails should now use the faster encoder.
+
+## Benchmark
+
+For console benchmark comparison, restart console after the above installation. Call `Rails::Patch::Json::Encode.patch_base_classes` in console, then re-run the test to see how the performance changes.
 
 The actual performance boost on real-world applications will probably be less than that. For one of my page I see the rendering time dropped by 25%.
 
