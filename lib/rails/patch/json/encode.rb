@@ -26,6 +26,10 @@ module Rails::Patch::Json::Encode
     [Object, Array, FalseClass, Float, Hash, Integer, NilClass, String, TrueClass].each do |klass|
       klass.class_eval do
         def to_json(opts = {})
+          if MultiJson.adapter == MultiJson::Adapters::Oj
+            opts = opts.to_h
+            opts[:indent] = Oj.default_options[:indent]
+          end
           MultiJson::dump(self.as_json(opts), opts)
         end
       end
