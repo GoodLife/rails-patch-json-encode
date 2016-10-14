@@ -7,7 +7,7 @@ module Rails::Patch::Json::Encode
     ::ActionController::Renderers.module_eval do
       # Override
       add :json do |json, options|
-        json = MultiJson::dump(json.as_json(options), options) unless json.kind_of?(String)
+        json = MultiJson::dump(json, options) unless json.kind_of?(String)
 
         if options[:callback].present?
           self.content_type ||= Mime::JS
@@ -26,7 +26,7 @@ module Rails::Patch::Json::Encode
     [Object, Array, FalseClass, Float, Hash, Integer, NilClass, String, TrueClass].each do |klass|
       klass.class_eval do
         def to_json(opts = {})
-          MultiJson::dump(self.as_json(opts), opts)
+          MultiJson::dump(self, opts)
         end
       end
     end
