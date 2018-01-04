@@ -1,4 +1,5 @@
 require "rails/patch/json/encode/version"
+require 'multi_json'
 
 module Rails::Patch::Json::Encode
   # Use multi_json instead of Rails' to_json method (which calls ActiveSupport::JSON)
