@@ -21,15 +21,24 @@ module Rails::Patch::Json::Encode
     end
   end
 
-  # Code from http://devblog.agworld.com.au/post/42586025923/the-performance-of-to-json-in-rails-sucks-and-theres
+
+
+  # Combine http://devblog.agworld.com.au/post/42586025923/the-performance-of-to-json-in-rails-sucks-and-theres
+  # and Rails' ToJsonWithActiveSupportEncoder together,
   # essentially reversing Rails' hard-coded call to ActiveSupport::JSON.encode
-  def self.patch_base_classes
-    [Object, Array, FalseClass, Float, Hash, Integer, NilClass, String, TrueClass].each do |klass|
-      klass.class_eval do
-        def to_json(opts = {})
-          MultiJson::dump(self.as_json(opts), opts)
-        end
+  module ToJsonWithMultiJson
+    def to_json(options = {})
+      if options.is_a?(::JSON::State)
+        super(options)
+      else
+        ::MultiJson::dump(self.as_json(options), options)
       end
+    end
+  end
+
+  def self.patch_base_classes
+    [Object, Array, FalseClass, Float, Hash, Integer, NilClass, String, TrueClass, Enumerable].reverse_each do |klass|
+      klass.prepend(ToJsonWithMultiJson)
     end
   end
 end
