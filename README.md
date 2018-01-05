@@ -8,38 +8,44 @@ All credits goes to [Jason Hutchens](https://github.com/jasonhutchens) for disco
 
 ## Installation
 
-First, go to your Rails console and type:
+First, let's measure the time before the patch.  
+Go to your Rails console and type:
 
-    data = Hash.new
+    require 'benchmark'
+    DATA = Hash.new
     key = 'aaa'
-    1000.times { data[key.succ!] = data.keys }
-    1000 * Benchmark.realtime { data.to_json }
+    1000.times { DATA[key.succ!] = DATA.keys }
+    Benchmark.realtime { 5.times { DATA.to_json } }
     
-See how Rails performs before the patch.
-
-Second, bundle install this gem with a fast JSON encoding gem in your Rails' Gemfile.
+Then bundle install this gem with a fast JSON encoding gem in your Rails' Gemfile.
 
     gem 'rails-patch-json-encode'
-    gem 'oj'
+    gem 'yajl-ruby', require: 'yajl'
     
-In this case I choose the oj gem, but you can [choose a json-encoder gem that multi_json supports](https://github.com/intridea/multi_json#supported-json-engines).
+In this case I choose the yajl-ruby gem, but you can [choose a json-encoder gem that multi_json supports](https://github.com/intridea/multi_json#supported-json-engines).
 
-Last, there are two levels of patch available. You have to choose one and call it explictly:
+The final step is to choose a patch. Two types of patches are available, and you have to choose one and invoke it explictly:
 
 * `Rails::Patch::Json::Encode.patch_base_classes` patches all Ruby base classes.
 * `Rails::Patch::Json::Encode.patch_renderers` patches Rails' ActionController::Renderers only. This is for those who had issue with the JSON gem, as patching base classes cause infinite recursive loop. 
 
-Place one of them in Rails' initializers like config/initializers/rails_patch_json_encode.rb, and Rails should now use the faster encoder.
+Place one of them in a Rails initializer (e.g. `config/initializers/rails_patch_json_encode.rb`), and Rails should now use the faster encoder.
 
-## Benchmark
-
-For console benchmark comparison, restart console after the above installation. Call `Rails::Patch::Json::Encode.patch_base_classes` in console, then re-run the test to see how the performance changes.
-
-The actual performance boost on real-world applications will probably be less than that. For one of my page I see the rendering time dropped by 25%.
+Now it's done. Reopen your Rails console and rerun the benchmark to see the difference.
 
 ## Warning
 
-This gem may break your app. **Test your app**. I am not sure if this is production ready.
+If you are using Oj gem, there is no need to install this gem. Call `Oj.optimize_rails` instead.
+
+Rails in recent years added safety nets to handle nested NaN, infinity and IO objects. This gem does not handle these cases.
+
+This gem may break your app. **Test your app**.
+
+## Benchmark
+
+`rake benchmark` is provided to show the difference before and after the patch. From my machine the time is dropped to 14% when using yajl on Rails 5.2.
+
+The actual performance boost on real-world applications will probably be less than that. For one of my page I see the rendering time dropped by 25%.
 
 ## What's with the name
 
