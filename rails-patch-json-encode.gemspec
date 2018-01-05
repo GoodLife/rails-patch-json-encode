@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.16.0"
   spec.add_development_dependency "rake", "~> 12.3.0"
   spec.add_development_dependency "activesupport", "~> 5.1.4"
-  spec.add_development_dependency "oj"
+  spec.add_development_dependency "yajl-ruby"
   spec.add_development_dependency "byebug"
 
   spec.add_dependency 'multi_json', '>= 1.9.3', '~> 1.0'

@@ -1,6 +1,6 @@
 require 'benchmark'
 require 'json'
-require 'oj'
+require 'yajl'
 require 'active_support'
 require 'active_support/json'
 require 'active_support/core_ext/object/json'
@@ -11,7 +11,6 @@ Benchmark: base classes patch mode
 
 Gem versions:
   ActiveSupport: #{ActiveSupport.version}
-  Oj: #{Oj::VERSION}
   MultiJson: #{MultiJson::VERSION}
 
 MESSAGE
